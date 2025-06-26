@@ -1,0 +1,19 @@
+- name: Déployer un conteneur Nginx sur le port 80
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Assurer que Docker est installé
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: Lancer un conteneur Nginx sur le port 80
+      docker_container:
+        name: nginx-container-80
+        image: nginx
+        state: started
+        ports:
+          - "80:80"
+        restart_policy: always
