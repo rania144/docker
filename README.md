@@ -8,4 +8,5 @@ Cette documentation décrit le processus d'automatisation . Elle détaille les f
 
 - **Infrastructure fonctionnelle** comme présenté dans le README.md
 - **Ansible** : Installer Ansible sur votre machine bastion. [Documentation Ansible](https://docs.ansible.com/ansible/latest/installation_guide/index.html)
-- **Récupérer le point de terminaison de la base de données**
+  
+
