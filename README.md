@@ -82,7 +82,7 @@ Cette règle permet à Prometheus d’envoyer des notifications ou de déclenche
 
 ---
 
-## Expression Prometheus utilisée
+# Expression Prometheus utilisée
 
 ```promql
 probe_success{job="blackbox", instance="http://arcdata-site:80"}
