@@ -99,6 +99,33 @@ Cette expression Prometheus vérifie si le site http://arcdata-site:80 surveill�
 Ansible automatise l'installation et la configuration de l'infrastructure pour le projet Arcdata, incluant la mise en place de Docker et des services de monitoring comme Prometheus et Grafana via des playbooks. Le fichier `docker-compose.yml` lance plusieurs conteneurs essentiels : le site Arcdata, Prometheus pour collecter les métriques, Grafana pour les visualiser, et Blackbox Exporter pour vérifier la disponibilité du site. Prometheus utilise des règles d’alerte, notamment pour détecter quand le site est inaccessible depuis plus de 30 secondes, ce qui permet de recevoir des notifications critiques et d'assurer la surveillance continue du service.
 
 
+# Explication du Dockerfile 
+
+Ce Dockerfile construit l'image Docker pour le service **arcdata-site**, qui correspond au site web Arcdata.
+
+- **Étape 1 :**  
+  Utilise l’image officielle légère `nginx:alpine`, qui est une version minimale de Nginx, un serveur web performant et populaire.
+
+- **Étape 2 :**  
+  Copie tout le contenu du dossier courant (dont notamment le fichier `index.html`) dans le dossier `/usr/share/nginx/html` à l'intérieur du conteneur.  
+  Ce dossier est le répertoire racine par défaut où Nginx sert les fichiers web.
+
+- **Étape 3 :**  
+  Expose le port 80, permettant d’accéder au site web via ce port.
+
+---
+
+## Relation avec le projet Arcdata
+
+- Ce Dockerfile permet de créer une image personnalisée contenant le site web Arcdata.  
+- L’image générée est utilisée dans le fichier `docker-compose.yml` sous le service **arcdata-site**.  
+- Le service **arcdata-site** expose le port 80 du conteneur sur le port 8080 de la machine hôte, rendant le site accessible via `http://localhost:8080`.  
+- Les autres services du projet (Prometheus, Grafana, Blackbox Exporter) surveillent et analysent ce site.  
+- En particulier, Prometheus, via Blackbox Exporter, vérifie la disponibilité du site Arcdata pour détecter rapidement toute indisponibilité.
+
+Ainsi, ce Dockerfile est un élément clé qui permet de déployer le site web Arcdata dans une infrastructure Docker orchestrée et supervisée automatiquement grâce à Ansible et aux outils de monitoring.
+
+
 
 
 
