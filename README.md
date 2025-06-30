@@ -115,7 +115,7 @@ Ce Dockerfile construit l'image Docker pour le service **arcdata-site**, qui cor
 
 ---
 
-## Relation avec le projet Arcdata
+## Relation direct avec le  projet Arcdata
 
 - Ce Dockerfile permet de créer une image personnalisée contenant le site web Arcdata.  
 - L’image générée est utilisée dans le fichier `docker-compose.yml` sous le service **arcdata-site**.  
