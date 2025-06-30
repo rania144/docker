@@ -75,9 +75,10 @@ Cette règle permet à Prometheus d’envoyer des notifications ou de déclenche
 
 | Service           | URL                  |
 |-------------------|----------------------|
-| Blackbox Exporter | http://44.204.175.4:9115 |
-| Prometheus        | http://44.204.175.4:9091 |
-| Site web Arcdata  | http://44.204.175.4:8080 |
+| Blackbox Exporter | http://localhost:9115 |
+| Prometheus        | http://localhost:9091 |
+| Site web Arcdata  | http://localhost:8080
+|grafana            | http://localhost:3000
 
 ---
 
@@ -86,14 +87,14 @@ Cette règle permet à Prometheus d’envoyer des notifications ou de déclenche
 ```promql
 probe_success{job="blackbox", instance="http://arcdata-site:80"}
 
+---
+Cette expression Prometheus vérifie si le site http://arcdata-site:80 surveillé par le job blackbox répond correctement au test de disponibilité HTTP.
+
+
 
  ---
 
 ## Contexte important
-
-Avant de lancer cette stack Docker avec `docker-compose.yml`, Docker doit être installé sur les serveurs.  
-Dans ce projet Arcdata, Docker a été installé et configuré automatiquement grâce au playbook Ansible `docker.yml`.  
-Ce playbook installe Docker, copie les fichiers nécessaires, ajoute l’utilisateur `ubuntu` au groupe Docker, et lance la stack Docker en mode détaché.
 
 ---
 Ansible automatise l'installation et la configuration de l'infrastructure pour le projet Arcdata, incluant la mise en place de Docker et des services de monitoring comme Prometheus et Grafana via des playbooks. Le fichier `docker-compose.yml` lance plusieurs conteneurs essentiels : le site Arcdata, Prometheus pour collecter les métriques, Grafana pour les visualiser, et Blackbox Exporter pour vérifier la disponibilité du site. Prometheus utilise des règles d’alerte, notamment pour détecter quand le site est inaccessible depuis plus de 30 secondes, ce qui permet de recevoir des notifications critiques et d'assurer la surveillance continue du service.
