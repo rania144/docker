@@ -84,10 +84,8 @@ Cette règle permet à Prometheus d’envoyer des notifications ou de déclenche
 
    # Expression Prometheus utilisée
 
-
 probe_success{job="blackbox", instance="http://arcdata-site:80"}
 
----
 Cette expression Prometheus vérifie si le site http://arcdata-site:80 surveillé par le job blackbox répond correctement au test de disponibilité HTTP.
 
 
