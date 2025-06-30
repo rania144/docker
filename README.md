@@ -20,7 +20,7 @@ Ce fichier `docker-compose.yml` définit plusieurs services essentiels pour le p
 
 ---
 
-## Configuration Prometheus (extrait)
+## Configuration Prometheus 
 
 - `global.scrape_interval` : Définit l’intervalle de collecte des métriques à 15 secondes.
 - `rule_files` : Charge les règles d’alerte définies dans `alert_rules.yml`.
@@ -42,6 +42,50 @@ Elle contient une alerte appelée **HTTP_Service_Down** qui se déclenche si le 
 - `annotations.description`: Description détaillée indiquant que l’URL `http://arcdata-site:80` ne répond plus depuis plus de 30 secondes.
 
 Cette règle permet à Prometheus d’envoyer des notifications ou de déclencher des actions quand le site web Arcdata est inaccessible.
+
+# Surveillance Prometheus & Blackbox Exporter - Projet Arcdata
+
+## Points clés de la surveillance
+
+- **URL sonde** :  
+  `http://blackbox_exporter:9115/probe?module=http_2xx&target=http://arcdata-site:80`  
+  Adresse où Blackbox Exporter teste la disponibilité HTTP.
+
+- **Job** :  
+  Identifie le groupe de cibles (ex : `blackbox` ou `arcdata-site`).
+
+- **État dernier test** :  
+  - `UP` = accessible  
+  - `DOWN` = inaccessible ou erreur
+
+- **Date et durée** :  
+  Quand et combien de temps a duré le dernier test.
+
+---
+
+## Importance
+
+- Vérifier que toutes les cibles sont surveillées.  
+- Détecter rapidement une panne (état DOWN).  
+- S’assurer que la collecte des métriques est régulière et fiable.
+
+---
+
+## URLs du projet Arcdata
+
+| Service           | URL                  |
+|-------------------|----------------------|
+| Blackbox Exporter | http://44.204.175.4:9115 |
+| Prometheus        | http://44.204.175.4:9091 |
+| Site web Arcdata  | http://44.204.175.4:8080 |
+
+---
+
+## Expression Prometheus utilisée
+
+```promql
+probe_success{job="blackbox", instance="http://arcdata-site:80"}
+
 
  ---
 
